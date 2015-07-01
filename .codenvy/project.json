@@ -1,1 +1,1 @@
-{"mixinTypes":[],"builders":{"configs":{},"default":"maven"},"runners":{"configs":{}},"description":"Eve Corporation / Profit Manager","type":"GAEJava","attributes":{"languageVersion":["1.6"],"language":["java"]}}
+{"builders":{"configs":{},"default":"maven"},"mixinTypes":[],"runners":{"configs":{}},"type":"GAEJava","attributes":{"languageVersion":["1.6"],"language":["java"]}}
