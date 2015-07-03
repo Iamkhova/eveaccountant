@@ -67,9 +67,19 @@ public class WebTester extends HttpServlet {
   public void doGet(HttpServletRequest req, HttpServletResponse resp)
 
   {
-    OfyService.ofy();
-     GameCharacter gc = new GameCharacter();
-    ofy().save().entity(gc).now();
+    
+         String   vcode = "CViRCKn7XRWC3UaVXZ0dkgl0QE7DPsypBPOZn3Y240bubHJ1ZfU4dtWC30lC6lSU";
+   int  keyid = 4300877;
+
+   
+    ApiAuthorization auth = new ApiAuthorization(keyid,92113484,vcode);
+    
+    CharacterInfo cinfo = new CharacterInfo();
+    WalletJournal wj = new WalletJournal();
+    cinfo.refresh(auth);
+    wj.refresh(auth);
+    
+    
     
 
 

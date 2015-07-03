@@ -12,15 +12,21 @@ import com.googlecode.objectify.annotation.Ignore;
 import java.util.logging.Logger;
 import org.joda.time.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import com.googlecode.objectify.annotation.Index;
+import com.beimin.eveapi.core.AbstractContentHandler;
+import static com.googlecode.objectify.ObjectifyService.ofy;
+import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.ObjectifyService;
+
 
 //@Entity
-@Index
+@Entity
 public class CharacterInfo {
     public static final Logger log = Logger.getLogger(CharacterInfo.class.getName());
 
-    private Long               characterID;
+    @Id private Long               characterID;
     private String             characterName;
     private EveRace            race;
     private EveAncestry        ancestry;
@@ -28,20 +34,27 @@ public class CharacterInfo {
     private EveBloodline       bloodline;
     private String             gender;
     private double             accountBalance;
-    private int                skillsPoints;
-    private String             shipName;
-    private long               shipTypeID;
-    private String             shipTypeName;
     @Index private long               corporationID;
     private String             corporationName;
-    private long               allianceID;
     private String             allianceName;
+  	 private Long allianceID;
+	private int intelligence;
+	private int memory;
+	private int charisma;
+	private int perception;
+	private int willpower;
+  private Set<ApiAttributeEnhancer> attributeEnhancers = new HashSet<ApiAttributeEnhancer>();
 
-
-    public CharacterInfo(ApiAuthorization _auth) {
+  public CharacterInfo()
+    {
+    
+  }
+  
+    public void refresh(ApiAuthorization _auth) {
         // extends character bsae
 
         CharacterSheetParser parser = new CharacterSheetParser();
+         OfyService.ofy();
         CharacterSheetResponse response;
         try {
             response = parser.getResponse(_auth);
@@ -56,6 +69,15 @@ public class CharacterInfo {
             this.corporationID = response.getCorporationID();
             this.allianceName = response.getAllianceName();
             this.accountBalance = response.getBalance();
+            this.allianceID = response.getAllianceID();
+           this.intelligence = response.getIntelligence();
+          this.memory = response.getMemory();
+          this.charisma = response.getCharisma();
+          this.perception = response.getPerception();
+          this.willpower = response.getWillpower();
+   
+           
+    ofy().save().entity(this).now();
 
         } catch (ApiException e) {
             // TODO Auto-generated catch block
@@ -107,6 +129,31 @@ public class CharacterInfo {
     public String getAllianceName() {
         return this.allianceName;
     }
+  
+  	public Long getAllianceID() {
+		return this.allianceID;
+	}
+  
+  public int getIntelligence() {
+    return this.intelligence;
+  }
+  
+  public int getMemory() {
+    return this.memory;
+  }
+  
+  public int getCharisma() {
+    return this.charisma;
+  }
+  
+  public int getPerception() {
+    return this.perception;
+  }
+  
+  public int getWillpower() {
+    return this.willpower;
+  }
+
 
 
 }

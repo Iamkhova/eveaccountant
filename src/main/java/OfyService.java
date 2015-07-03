@@ -7,7 +7,9 @@ import com.googlecode.objectify.impl.translate.opt.joda.JodaTimeTranslators;
 public class OfyService {
     static {
        JodaTimeTranslators.add(ObjectifyService.factory());
-        ObjectifyService.register(GameCharacter.class);
+        ObjectifyService.register(CharacterInfo.class);
+       ObjectifyService.register(WalletJournal.class);
+
     }
 
     public static Objectify ofy() {
